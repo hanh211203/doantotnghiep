@@ -20,8 +20,8 @@ class AccountantController extends Controller
     {
         $obj = new Accountant();
         $accountants = $obj->index();
-        return view('accountants.index',[
-            'accountants'=>$accountants
+        return view('accountants.index', [
+            'accountants' => $accountants
         ]);
     }
 
@@ -43,16 +43,20 @@ class AccountantController extends Controller
      */
     public function store(StoreAccountantRequest $request)
     {
-        $obj = new Accountant();
-        $obj->accountant_phone = $request->accountant_phone;
-        $obj->accountant_name = $request->accountant_name;
-        $obj->province = $request->province;
-        $obj->district = $request->district;
-        $obj->street = $request->street;
-        $obj->email= $request->email;
-        $obj->password = bcrypt($request->get('password'));
-        $obj->store();
-        return Redirect::route('accountants.index');
+        if ($request->validated()) {
+            $obj = new Accountant();
+            $obj->accountant_phone = $request->accountant_phone;
+            $obj->accountant_name = $request->accountant_name;
+            $obj->province = $request->province;
+            $obj->district = $request->district;
+            $obj->street = $request->street;
+            $obj->email = $request->email;
+            $obj->password = bcrypt($request->get('password'));
+            $obj->store();
+            return Redirect::route('accountants.index');
+        } else {
+            return Redirect::back();
+        }
     }
 
     /**
@@ -77,9 +81,9 @@ class AccountantController extends Controller
         $obj = new Accountant();
         $obj->id = $request->id;
         $accountant = $obj->edit();
-        return view('accountants.edit',[
-            'accountant'=>$accountant,
-            'id'=>$obj->id
+        return view('accountants.edit', [
+            'accountant' => $accountant,
+            'id' => $obj->id
         ]);
     }
 
@@ -119,22 +123,23 @@ class AccountantController extends Controller
         return Redirect::route('accountants.index');
     }
 
-    public function loginAccountant(Request $request){
-        $account = $request->only(['email','password']);
-        if(Auth::guard('accountants')->attempt($account)){
+    public function loginAccountant(Request $request)
+    {
+        $account = $request->only(['email', 'password']);
+        if (Auth::guard('accountants')->attempt($account)) {
             $accountant = Auth::guard('accountants')->user();
             Auth::guard('accountants')->login($accountant);
-            session(['accountant'=>$accountant]);
+            session(['accountant' => $accountant]);
             return Redirect::route('receipts.index');
-        }else{
+        } else {
             return Redirect::back();
         }
     }
 
-    public function logoutAccountant(){
+    public function logoutAccountant()
+    {
         Auth::guard('accountants')->logout();
         session()->forget('accountant');
         return Redirect::route('start.index');
     }
-
 }

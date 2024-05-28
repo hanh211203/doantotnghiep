@@ -19,8 +19,8 @@ class MajorController extends Controller
     {
         $obj = new Major();
         $majors = $obj->index();
-        return view('majors.index',[
-            'majors'=>$majors
+        return view('majors.index', [
+            'majors' => $majors
         ]);
     }
 
@@ -42,10 +42,14 @@ class MajorController extends Controller
      */
     public function store(StoreMajorRequest $request)
     {
-        $obj = new Major();
-        $obj->name = $request->name;
-        $obj->store();
-        return Redirect::route('majors.index');
+        if ($request->validated()) {
+            $obj = new Major();
+            $obj->name = $request->name;
+            $obj->store();
+            return Redirect::route('majors.index');
+        } else {
+            return Redirect::back();
+        }
     }
 
     /**
@@ -70,9 +74,9 @@ class MajorController extends Controller
         $obj = new Major();
         $obj->id = $request->id;
         $major = $obj->edit();
-        return view('majors.edit',[
+        return view('majors.edit', [
             'majors' => $major,
-            'id'=> $obj->id
+            'id' => $obj->id
         ]);
     }
 

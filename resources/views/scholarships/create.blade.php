@@ -112,6 +112,11 @@
                             <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="content">
@@ -125,6 +130,9 @@
                                 <label for="scholarship_amount">Mức Học Bổng</label>
                                 <input name="scholarship_amount" type="text" id="scholarship_amount"
                                     class="form-control form-control-sm" />
+                                @if ($errors->has('scholarship_amount'))
+                                    <span class="text-danger">{{ $errors->first('scholarship_amount') }}</span>
+                                @endif
                             </div>
                             <div>
                                 <button class="btn-save">Lưu</button>

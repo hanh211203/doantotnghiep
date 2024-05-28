@@ -62,26 +62,31 @@ class StudentController extends Controller
      */
     public function store(StoreStudentRequest $request)
     {
-        $obj = new Student();
-        $obj->student_name = $request->student_name;
-        $obj->student_dob = $request->student_dob;
-        $obj->student_phone = $request->student_phone;
-        $obj->student_parent_phone = $request->student_parent_phone;
-        $obj->province = $request->province;
-        $obj->district = $request->district;
-        $obj->street = $request->street;
-        $obj->class_id = $request->class_id;
-        $obj->scholarship_id = $request->scholarship_id;
-        $obj->payment_type_id = $request->payment_type_id;
-        $obj->total_fee = $request->total_fee;
-        $obj->amount_each_time = $request->amount_each_time;
-        $obj->tuition_status = $request->tuition_status;
-        $obj->debt = $request->debt;
-        $obj->store();
-        return Redirect::route('students.studentFilter',[
-                'id'=>$obj->class_id
-            ]
-        );
+        if ($request->validated()){
+            $obj = new Student();
+            $obj->student_name = $request->student_name;
+            $obj->student_dob = $request->student_dob;
+            $obj->student_phone = $request->student_phone;
+            $obj->student_parent_phone = $request->student_parent_phone;
+            $obj->province = $request->province;
+            $obj->district = $request->district;
+            $obj->street = $request->street;
+            $obj->class_id = $request->class_id;
+            $obj->scholarship_id = $request->scholarship_id;
+            $obj->payment_type_id = $request->payment_type_id;
+            $obj->total_fee = $request->total_fee;
+            $obj->amount_each_time = $request->amount_each_time;
+            $obj->tuition_status = $request->tuition_status;
+            $obj->debt = $request->debt;
+            $obj->store();
+            return Redirect::route('students.studentFilter',[
+                    'id'=>$obj->class_id
+                ]
+            );
+        } else {
+            return Redirect::back();
+        }
+
     }
 
     /**

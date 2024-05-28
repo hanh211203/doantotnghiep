@@ -112,6 +112,11 @@
                             <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="content">
@@ -122,9 +127,12 @@
                         @csrf
                         <div class="inputs-list">
                             <div class="mt-3 mb-3">
-                                <label for="name">Tên Phương Thức Thanh Toán</label>
+                                <label style="width: 300px" for="name">Tên Phương Thức Thanh Toán</label>
                                 <input name="name" type="text" id="payMethodName"
                                     class="form-control form-control-sm" />
+                                @if ($errors->has('name'))
+                                    <span class="text-danger">{{ $errors->first('name') }}</span>
+                                @endif
                             </div>
                             <div>
                                 <button class="btn-save">Lưu</button>

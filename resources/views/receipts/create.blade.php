@@ -90,22 +90,22 @@
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_id">Mã SV</label>
                                         <input value="{{ $student->id }}" name="student_id" type="text"
-                                            id="student_id" readonly/>
+                                            id="student_id" readonly />
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_name">Tên SV</label>
                                         <input value="{{ $student->student_name }}" name="student_name" type="text"
-                                            id="student_name" readonly/>
+                                            id="student_name" readonly />
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_dob">Ngày sinh</label>
                                         <input value="{{ $student->student_dob }}" name="student_dob" type="date"
-                                            id="student_dob" readonly/>
+                                            id="student_dob" readonly />
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="amount_each_time">HP/lần đóng</label>
                                         <input value="{{ $student->amount_each_time }}" name="amount_each_time"
-                                            type="text" id="amount_each_time" readonly/>
+                                            type="text" id="amount_each_time" readonly />
                                     </div>
                                 @endforeach
                             </div>
@@ -135,14 +135,23 @@
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="submitter_name">Người nộp</label>
                                     <input name="submitter_name" type="text" id="submitter_name" />
+                                    @if ($errors->has('submitter_name'))
+                                        <span class="text-danger">{{ $errors->first('submitter_name') }}</span>
+                                    @endif
                                 </div>
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="submitter_phone">SĐT người nộp</label>
                                     <input name="submitter_phone" type="text" id="submitter_phone" />
+                                    @if ($errors->has('submitter_phone'))
+                                        <span class="text-danger">{{ $errors->first('submitter_phone') }}</span>
+                                    @endif
                                 </div>
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="payment_date_time">Vào lúc</label>
                                     <input name="payment_date_time" type="datetime-local" id="payment_date_time" />
+                                    @if ($errors->has('payment_date_time'))
+                                        <span class="text-danger">{{ $errors->first('payment_date_time') }}</span>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
@@ -150,7 +159,8 @@
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="current_debt">Công nợ hiện tại</label>
                                         <input name="current_debt" value="{{ $student->debt }}"
-                                            data-current="{{ $student->debt }}" type="text" id="current_debt" readonly/>
+                                            data-current="{{ $student->debt }}" type="text" id="current_debt"
+                                            readonly />
                                     </div>
                                 @endforeach
                                 <div class="mt-3 mb-3">
@@ -158,18 +168,25 @@
                                     <input value="{{ $student->amount_each_time }}"
                                         data-amount="{{ $student->amount_each_time }}" name="amount_of_money"
                                         type="text" id="amount_of_money" />
+                                    @if ($errors->has('amount_of_money'))
+                                        <span class="text-danger">{{ $errors->first('amount_of_money') }}</span>
+                                    @endif
                                 </div>
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="amount_owed">Tiền còn nợ</label>
-                                    <input name="amount_owed" type="text" id="amount_owed" />
+                                    <input name="amount_owed" type="text" id="amount_owed" readonly />
                                 </div>
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="debt">Cập nhật công nợ</label>
-                                    <input name="debt" type="text" id="debt" />
+                                    <input name="debt" type="text" id="debt" readonly />
                                 </div>
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="note">Nội dung</label>
-                                    <input name="note" type="text" id="note" value="{{ old('ghi_chu', 'Không') }}"/>
+                                    <input name="note" type="text" id="note"
+                                        value="{{ old('ghi_chu', 'Không') }}" />
+                                    @if ($errors->has('note'))
+                                        <span class="text-danger">{{ $errors->first('note') }}</span>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -203,8 +220,8 @@
             <div class="modal-name">Scan Mã QR Code</div>
             <br>
             <br>
-            <img src="{{ URL('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png') }}" class="qr_code_img" alt="qr"
-                style="width: 250px; height: 250px">
+            <img src="{{ URL('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png') }}"
+                class="qr_code_img" alt="qr" style="width: 250px; height: 250px">
         </div>
     </div>
 

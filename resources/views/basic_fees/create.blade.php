@@ -112,6 +112,11 @@
                             <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="content">
@@ -145,6 +150,9 @@
                                 <label for="basic_fee_amount">Mức Học phí</label>
                                 <input name="basic_fee_amount" type="text" id="basic_fee_amount"
                                     class="form-control form-control-sm" />
+                                @if ($errors->has('basic_fee_amount'))
+                                    <span class="text-danger">{{ $errors->first('basic_fee_amount') }}</span>
+                                @endif
                             </div>
                             <div>
                                 <button class="btn-save">Lưu</button>

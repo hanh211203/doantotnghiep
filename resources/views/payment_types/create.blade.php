@@ -112,6 +112,11 @@
                             <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="content">
@@ -125,16 +130,25 @@
                                 <label for="payment_type_name">Tên Kiểu Đóng</label>
                                 <input name="payment_type_name" type="text" id="payment_type_name"
                                     class="form-control form-control-sm" />
+                                    @if ($errors->has('payment_type_name'))
+                                            <span class="text-danger">{{ $errors->first('payment_type_name') }}</span>
+                                        @endif
                             </div>
                             <div class="mt-3 mb-3">
                                 <label for="discount">Mức giảm học phí</label>
                                 <input name="discount" type="text" id="discount"
                                     class="form-control form-control-sm" />
+                                    @if ($errors->has('discount'))
+                                            <span class="text-danger">{{ $errors->first('discount') }}</span>
+                                        @endif
                             </div>
                             <div class="mt-3 mb-3">
                                 <label for="payment_times">Tổng số lần đóng</label>
                                 <input name="payment_times" type="text" id="payment_times"
                                     class="form-control form-control-sm" />
+                                    @if ($errors->has('payment_times'))
+                                            <span class="text-danger">{{ $errors->first('payment_times') }}</span>
+                                        @endif
                             </div>
                             <div>
                                 <button class="btn-save">Lưu</button>

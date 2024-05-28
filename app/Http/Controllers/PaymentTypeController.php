@@ -19,8 +19,8 @@ class PaymentTypeController extends Controller
     {
         $obj = new PaymentType();
         $payment_types = $obj->index();
-        return view('payment_types.index',[
-            'payment_types'=>$payment_types
+        return view('payment_types.index', [
+            'payment_types' => $payment_types
         ]);
     }
 
@@ -32,7 +32,6 @@ class PaymentTypeController extends Controller
     public function create()
     {
         return view('payment_types.create');
-
     }
 
     /**
@@ -43,12 +42,16 @@ class PaymentTypeController extends Controller
      */
     public function store(StorePaymentTypeRequest $request)
     {
-        $obj = new PaymentType();
-        $obj->payment_type_name = $request->payment_type_name;
-        $obj->discount = $request->discount;
-        $obj->payment_times = $request->payment_times;
-        $obj->store();
-        return Redirect::route('payment_types.index');
+        if ($request->validated()) {
+            $obj = new PaymentType();
+            $obj->payment_type_name = $request->payment_type_name;
+            $obj->discount = $request->discount;
+            $obj->payment_times = $request->payment_times;
+            $obj->store();
+            return Redirect::route('payment_types.index');
+        } else {
+            return Redirect::back();
+        }
     }
 
     /**
@@ -73,9 +76,9 @@ class PaymentTypeController extends Controller
         $obj = new PaymentType();
         $obj->id = $request->id;
         $payment_type = $obj->edit();
-        return view('payment_types.edit',[
-            'id'=>$obj->id,
-            'payments'=>$payment_type
+        return view('payment_types.edit', [
+            'id' => $obj->id,
+            'payments' => $payment_type
         ]);
     }
 

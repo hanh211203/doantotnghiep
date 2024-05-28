@@ -124,20 +124,18 @@ class AdminController extends Controller
         $obj->destroyAdmin();
         return Redirect::route('admins.index');
     }
+
     public function loginAdmin(Request $request)
     {
-        //        $account = array();
-        //        $account = Arr::add($account, 'email' , $request->admin_username);
-        //        $account = Arr::add($account, 'password' , $request->admin_password);
+
         $account = $request->only(['email', 'password']);
-        //        dd($account);
+
         if (Auth::guard('admins')->attempt($account)) {
             $admin = Auth::guard('admins')->user();
             Auth::guard('admins')->login($admin);
             session(['admin' => $admin]);
             return Redirect::route('dashboards.index');
         } else {
-            //            dd("error");
             return Redirect::back();
         }
     }

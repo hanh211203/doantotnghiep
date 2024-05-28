@@ -112,6 +112,11 @@
                             <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="content">
@@ -124,14 +129,23 @@
                             <div class="mt-3 mb-3">
                                 <label class="item-label" for="academic_start_year">Năm bắt đầu</label>
                                 <input name="academic_start_year" type="date" id="academic_start_year" />
+                                @if ($errors->has('academic_start_year'))
+                                    <span class="text-danger">{{ $errors->first('academic_start_year') }}</span>
+                                @endif
                             </div>
                             <div class="mt-3 mb-3">
                                 <label class="item-label" for="academic_end_year">Năm kết thúc</label>
                                 <input name="academic_end_year" type="date" id="academic_end_year" />
+                                @if ($errors->has('academic_end_year'))
+                                    <span class="text-danger">{{ $errors->first('academic_end_year') }}</span>
+                                @endif
                             </div>
                             <div class="mt-3 mb-3">
                                 <label class="item-label" for="academic_name">Tên Niên khoá</label>
                                 <input name="academic_name" type="text" id="academic_name" />
+                                @if ($errors->has('academic_name'))
+                                    <span class="text-danger">{{ $errors->first('academic_name') }}</span>
+                                @endif
                             </div>
                             <div>
                                 <button class="btn-save">Lưu</button>
@@ -152,21 +166,19 @@
     <script>
         let subMenu = document.getElementById("subMenu");
 
-        function toggleMenu(){
+        function toggleMenu() {
             subMenu.classList.toggle("open-menu");
         }
 
         window.onclick = (event) => {
             if (!event.target.matches('.user-pic')) {
-                if(subMenu.classList.contains('open-menu')){
+                if (subMenu.classList.contains('open-menu')) {
                     subMenu.classList.remove('open-menu')
+                }
+            }
         }
-    }
-}
 
-    subMenu.addEventListener('click', (event) => event.stopPropagation());
-
-
+        subMenu.addEventListener('click', (event) => event.stopPropagation());
     </script>
 </body>
 

@@ -126,6 +126,11 @@
                             <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <div class="content">
@@ -239,16 +244,44 @@
                                         style="height: 3px; width: 400px; background-color: #147dbc;"></div>
                                     <h1 style="font-size: 26px; margin-top: 15px;margin-bottom: 13px">Tin Tức</h1>
                                     {{-- Content --}}
-                                    <div class="card mb-3" style="width: 400px">
-                                        <img src="{{ URL('image/anh-t38-39.png') }}" alt=""
-                                            class="card-img-top" style="height: 146px;">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Thông báo Kế hoạch đóng Học phí Quý 5/2024</h5>
-                                            <p class="card-text">Dựa theo đề án 07-NQ34, Bộ phân Kế toán đưa ra kế
-                                                hoạch tổ chức đóng học như sau</p>
-                                            <p class="card-text"><small class="text-body-secondary">03/07/2024
-                                                    19:45PM</small></p>
+                                    {{-- @foreach ($blogs as $blog)
+                                        <div class="card mb-3" style="width: 400px">
+                                            <img src="{{ asset(\Illuminate\Support\Facades\Storage::url('Admin/') . $blog->image) }}"  alt=""
+                                            class="card-img-top" style="height: 195px;">
+                                            <a href="{{ route('blogs.show', ['id' => $blog->id]) }}">
+                                                <img src="{{ asset('storage/Admin/' . $blog->image) }}"
+                                                    alt="Ảnh tin tức" class="card-img-top" style="height: 195px;">
+                                            </a>
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $blog->title_blog }}</h5>
+                                                <p class="card-text">{{ $blog->description_blog }}</p>
+                                                <p class="card-text"><small
+                                                        class="text-body-secondary">{{ $blog->posting_date_time }}</small>
+                                                </p>
+                                            </div>
+
                                         </div>
+                                    @endforeach --}}
+
+                                    @foreach ($blogs as $blog)
+                                        <div class="card mb-3" style="width: 400px">
+                                            <a href="{{ route('blogs.show', ['id' => $blog->id]) }}">
+                                                <img src="{{ asset('storage/Admin/' . $blog->image) }}"
+                                                    alt="Ảnh tin tức" class="card-img-top" style="height: 195px;">
+                                            </a>
+                                            <div class="card-body">
+                                                <h5 class="card-title">{{ $blog->title_blog }}</h5>
+                                                <p class="card-text">{{ $blog->description_blog }}</p>
+                                                <p class="card-text"><small
+                                                        class="text-body-secondary">{{ $blog->posting_date_time }}</small>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    @endforeach
+
+                                    {{-- Hiển thị phân trang --}}
+                                    <div class="pagination">
+                                        {{ $blogs->links() }}
                                     </div>
                                 </div>
                             </div>

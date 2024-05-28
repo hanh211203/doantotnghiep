@@ -139,3 +139,13 @@ Route::middleware('checkLoginAccountant')->prefix('/receipts')->group(function()
 
     Route::post('/send-sms/{id}', [SendSMSController::class, 'sendSMS'])->name('sendSMS');
 
+    Route::get('/blogs', [\App\Http\Controllers\BlogController::class, 'index'])->name('blogs.index');
+    Route::get('/blogs/create', [\App\Http\Controllers\BlogController::class, 'create'])->name('blogs.create');
+    //them DL len DB
+    Route::post('/blogs/create', [\App\Http\Controllers\BlogController::class, 'store'])->name('blogs.store');
+    Route::get('/blogs/{id}/edit', [\App\Http\Controllers\BlogController::class, 'edit'])->name('blogs.edit');
+    //update
+    Route::put('/blogs/{id}/edit', [\App\Http\Controllers\BlogController::class, 'update'])->name('blogs.update');
+    Route::delete('/blogs/{id}', [\App\Http\Controllers\BlogController::class, 'destroy'])->name('blogs.destroy');
+    //show
+    Route::get('/blogs/{id}', [\App\Http\Controllers\BlogController::class, 'showBlog'])->name('blogs.show');

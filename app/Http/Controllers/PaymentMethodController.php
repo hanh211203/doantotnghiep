@@ -19,8 +19,8 @@ class PaymentMethodController extends Controller
     {
         $obj = new PaymentMethod();
         $payment_methods = $obj->index();
-        return view('payment_methods.index',[
-            'payment_methods'=>$payment_methods
+        return view('payment_methods.index', [
+            'payment_methods' => $payment_methods
         ]);
     }
 
@@ -42,10 +42,14 @@ class PaymentMethodController extends Controller
      */
     public function store(StorePaymentMethodRequest $request)
     {
-        $obj = new PaymentMethod();
-        $obj->name= $request->name;
-        $obj->store();
-        return Redirect::route('payment_methods.index');
+        if ($request->validated()) {
+            $obj = new PaymentMethod();
+            $obj->name = $request->name;
+            $obj->store();
+            return Redirect::route('payment_methods.index');
+        } else {
+            return Redirect::back();
+        }
     }
 
     /**
@@ -70,9 +74,9 @@ class PaymentMethodController extends Controller
         $obj = new PaymentMethod();
         $obj->id = $request->id;
         $payment = $obj->edit();
-        return view('payment_methods.edit',[
-            'id'=>$obj->id,
-            'payments'=>$payment
+        return view('payment_methods.edit', [
+            'id' => $obj->id,
+            'payments' => $payment
         ]);
     }
 

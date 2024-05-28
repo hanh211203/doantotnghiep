@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateScholarshipRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
+
 class ScholarshipController extends Controller
 {
     /**
@@ -42,10 +43,14 @@ class ScholarshipController extends Controller
      */
     public function store(StoreScholarshipRequest $request)
     {
-        $obj = new Scholarship();
-        $obj->scholarship_amount = $request->scholarship_amount;
-        $obj->store();
-        return Redirect::route('scholarships.index');
+        if ($request->validated()){
+            $obj = new Scholarship();
+            $obj->scholarship_amount = $request->scholarship_amount;
+            $obj->store();
+            return Redirect::route('scholarships.index');
+        } else {
+            return Redirect::back();
+        }
     }
 
     /**

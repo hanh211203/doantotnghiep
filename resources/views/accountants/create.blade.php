@@ -99,7 +99,7 @@
                     </li>
                     <li>
                         <a href="{{ route('basic_fees.index') }}">
-                            <span><i class="fas fa-money-bill"></i>>Học Phí Cơ Bản</span>
+                            <span><i class="fas fa-money-bill"></i>Học Phí Cơ Bản</span>
                         </a>
                     </li>
                     <li>
@@ -110,6 +110,11 @@
                     <li>
                         <a href="{{ route('payment_types.index') }}">
                             <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('blogs.index') }}">
+                            <span><i class="fas fa-bell"></i>Bài Đăng</span>
                         </a>
                     </li>
                 </ul>
@@ -125,11 +130,17 @@
                                 <label for="accountant_name">Họ tên</label>
                                 <input name="accountant_name" type="text" id="accountant_name"
                                     class="form-control form-control-sm" />
+                                @if ($errors->has('accountant_name'))
+                                    <span class="text-danger">{{ $errors->first('accountant_name') }}</span>
+                                @endif
                             </div>
                             <div class="mt-3 mb-3">
                                 <label for="accountant_phone">Số điện thoại</label>
                                 <input name="accountant_phone" type="text" id="accountant_phone"
                                     class="form-control form-control-sm" />
+                                @if ($errors->has('accountant_phone'))
+                                    <span class="text-danger">{{ $errors->first('accountant_phone') }}</span>
+                                @endif
                             </div>
 
                             <div class="mt-3 mb-3">
@@ -141,16 +152,25 @@
                                         <label for="province">Thành phố</label>
                                         <input name="province" type="text" id="province"
                                             class="form-control form-control-sm" />
+                                        @if ($errors->has('province'))
+                                            <span class="text-danger">{{ $errors->first('province') }}</span>
+                                        @endif
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-3">
                                         <label for="district">Quận</label>
                                         <input name="district" type="text" id="district"
                                             class="form-control form-control-sm" />
+                                        @if ($errors->has('district'))
+                                            <span class="text-danger">{{ $errors->first('district') }}</span>
+                                        @endif
                                     </div>
                                     <div class="col-lg-3 col-md-3 col-sm-3 col-3">
                                         <label for="street">Đường</label>
                                         <input name="street" type="text" id="street"
                                             class="form-control form-control-sm" />
+                                        @if ($errors->has('street'))
+                                            <span class="text-danger">{{ $errors->first('street') }}</span>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -158,11 +178,17 @@
                                 <label for="email">Email</label>
                                 <input name="email" type="text" id="email"
                                     class="form-control form-control-sm" />
+                                @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
                             </div>
                             <div class="mt-3 mb-3">
                                 <label for="password">Mật khẩu</label>
                                 <input name="password" type="password" id="password"
                                     class="form-control form-control-sm" />
+                                @if ($errors->has('password'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
                             </div>
                             <div>
                                 <button class="btn-save">Lưu</button>

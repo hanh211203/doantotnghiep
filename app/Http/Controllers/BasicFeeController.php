@@ -22,8 +22,8 @@ class BasicFeeController extends Controller
     {
         $obj = new BasicFee();
         $basic_fees = $obj->index();
-        return view('basic_fees.index',[
-            'basic_fees'=>$basic_fees
+        return view('basic_fees.index', [
+            'basic_fees' => $basic_fees
         ]);
     }
 
@@ -38,9 +38,9 @@ class BasicFeeController extends Controller
         $majors = $obj1->index();
         $obj2 = new AcademicYear();
         $academics = $obj2->index();
-        return view('basic_fees.create',[
-            'majors'=>$majors,
-            'academics'=>$academics
+        return view('basic_fees.create', [
+            'majors' => $majors,
+            'academics' => $academics
         ]);
     }
 
@@ -52,19 +52,23 @@ class BasicFeeController extends Controller
      */
     public function store(StoreBasicFeeRequest $request)
     {
-        $obj = new BasicFee();
-        $obj->major_id = $request->major_id;
-        $obj->academic_id = $request->academic_id;
-        $obj->basic_fee_amount = $request->basic_fee_amount;
-        $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
-            'major_id' => BasicFee::uniqueMajorAndAcademic($request->major_id),
-            'academic_id ' => BasicFee::uniqueMajorAndAcademic($request->academic_id),
-        ]);
-        if ($validator->fails()) {
-            return alert('Bản ghi đã tồn tại!');
-        }else{
-            $obj->store();
-            return Redirect::route('basic_fees.index');
+        if ($request->validated()) {
+            $obj = new BasicFee();
+            $obj->major_id = $request->major_id;
+            $obj->academic_id = $request->academic_id;
+            $obj->basic_fee_amount = $request->basic_fee_amount;
+            $validator = \Illuminate\Support\Facades\Validator::make($request->all(), [
+                'major_id' => BasicFee::uniqueMajorAndAcademic($request->major_id),
+                'academic_id ' => BasicFee::uniqueMajorAndAcademic($request->academic_id),
+            ]);
+            if ($validator->fails()) {
+                return alert('Bản ghi đã tồn tại!');
+            } else {
+                $obj->store();
+                return Redirect::route('basic_fees.index');
+            }
+        } else {
+            return Redirect::back();
         }
     }
 
@@ -96,12 +100,12 @@ class BasicFeeController extends Controller
         $obj3->major_id = $request->major_id;
         $obj3->academic_id = $request->academic_id;
         $basic_fees = $obj3->edit();
-        return view('basic_fees.edit',[
-            'majors'=>$majors,
-            'academics'=>$academics,
-            'basic_fees'=>$basic_fees,
-            'major_id'=>$obj3->major_id,
-            'academic_id'=>$obj3->academic_id
+        return view('basic_fees.edit', [
+            'majors' => $majors,
+            'academics' => $academics,
+            'basic_fees' => $basic_fees,
+            'major_id' => $obj3->major_id,
+            'academic_id' => $obj3->academic_id
         ]);
     }
 
@@ -120,7 +124,6 @@ class BasicFeeController extends Controller
         $obj->basic_fee_amount = $request->basic_fee_amount;
         $obj->updateBasicFee();
         return Redirect::route('basic_fees.index');
-
     }
 
     /**

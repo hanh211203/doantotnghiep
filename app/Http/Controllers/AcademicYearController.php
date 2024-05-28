@@ -20,8 +20,8 @@ class AcademicYearController extends Controller
     {
         $obj = new AcademicYear();
         $academics = $obj->index();
-        return view('academic_years.index',[
-            'academics'=>$academics
+        return view('academic_years.index', [
+            'academics' => $academics
         ]);
     }
 
@@ -43,12 +43,16 @@ class AcademicYearController extends Controller
      */
     public function store(StoreAcademicYearRequest $request)
     {
-        $obj = new AcademicYear();
-        $obj->academic_start_year = $request->academic_start_year;
-        $obj->academic_end_year = $request->academic_end_year;
-        $obj->academic_name = $request->academic_name;
-        $obj->store();
-        return Redirect::route('academics.index');
+        if ($request->validated()) {
+            $obj = new AcademicYear();
+            $obj->academic_start_year = $request->academic_start_year;
+            $obj->academic_end_year = $request->academic_end_year;
+            $obj->academic_name = $request->academic_name;
+            $obj->store();
+            return Redirect::route('academics.index');
+        } else {
+            return Redirect::back();
+        }
     }
 
     /**
@@ -73,9 +77,9 @@ class AcademicYearController extends Controller
         $obj = new AcademicYear();
         $obj->id = $request->id;
         $academic = $obj->edit();
-        return view('academic_years.edit',[
+        return view('academic_years.edit', [
             'academics' => $academic,
-            'id'=>$obj->id
+            'id' => $obj->id
         ]);
     }
 
@@ -111,7 +115,7 @@ class AcademicYearController extends Controller
         return Redirect::route('academics.index');
     }
 
-    public function newFunction(){
-
+    public function newFunction()
+    {
     }
 }

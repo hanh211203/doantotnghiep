@@ -104,23 +104,28 @@ class ReceiptController extends Controller
      */
     public function store(StoreReceiptRequest $request)
     {
-        $obj = new Receipt();
-        $obj->student_id = $request->student_id;
-        $obj->payment_method_id = $request->payment_method_id;
-        $obj->accountant_id = $request->accountant_id;
-        $obj->submitter_name = $request->submitter_name;
-        $obj->submitter_phone = $request->submitter_phone;
-        $obj->payment_date_time = $request->payment_date_time;
-        $obj->amount_of_money = $request->amount_of_money;
-        $obj->amount_owed = $request->amount_owed;
-        $obj->note = $request->note;
-        $obj->store();
+        if ($request->validated()){
+            $obj = new Receipt();
+            $obj->student_id = $request->student_id;
+            $obj->payment_method_id = $request->payment_method_id;
+            $obj->accountant_id = $request->accountant_id;
+            $obj->submitter_name = $request->submitter_name;
+            $obj->submitter_phone = $request->submitter_phone;
+            $obj->payment_date_time = $request->payment_date_time;
+            $obj->amount_of_money = $request->amount_of_money;
+            $obj->amount_owed = $request->amount_owed;
+            $obj->note = $request->note;
+            $obj->store();
 
-        $obj2 = Student::findOrFail($request->student_id);
-        $obj2->debt = $request->debt;
-        $obj2->tuition_status = $request->debt > 0 ? 0 : 1;
-        $obj2->updateDebt();
-        return Redirect::route('receipts.index');
+            $obj2 = Student::findOrFail($request->student_id);
+            $obj2->debt = $request->debt;
+            $obj2->tuition_status = $request->debt > 0 ? 0 : 1;
+            $obj2->updateDebt();
+            return Redirect::route('receipts.index');
+        } else {
+            return Redirect::back();
+        }
+
     }
     public function studentFilter(Request $request)
     {
