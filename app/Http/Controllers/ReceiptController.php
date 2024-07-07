@@ -24,47 +24,54 @@ class ReceiptController extends Controller
     {
         $obj = new Receipt();
         $receipts = $obj->index();
+        $obj2 = new StudyClass();
+        $classes = $obj2->index();
         return view('receipts.index',[
-            'receipts'=>$receipts
+            'receipts'=>$receipts,
+            'classes'=>$classes
         ]);
     }
-    public function classesList(){
+    public function classesList()
+    {
         $obj = new StudyClass();
         $classes = $obj->index();
-        return view('receipts.academics',[
-            'classes'=>$classes,
+        return view('receipts.academics', [
+            'classes' => $classes,
         ]);
     }
 
-    public function classFilter(Request $request){
+    public function classFilter(Request $request)
+    {
         $obj = new StudyClass();
         $obj->academic_id = $request->id;
         $classes = $obj->classFilter();
         $obj2 = new AcademicYear();
         $obj2->id = $request->id;
         $academics = $obj2->edit();
-        return view('receipts.classes',[
-            'classes'=>$classes,
-            'academics'=>$academics
+        return view('receipts.classes', [
+            'classes' => $classes,
+            'academics' => $academics
         ]);
     }
 
-    public function export(Request $request){
+    public function export(Request $request)
+    {
         $obj = new Receipt();
         $obj->id = $request->id;
         $receipts = $obj->export();
         // hien thi view va truyen du lieu sang
         return view('receipts.export', [
-            'receipts'=>$receipts,
-            'id'=>$obj->id
+            'receipts' => $receipts,
+            'id' => $obj->id
         ]);
     }
 
-    public function debt(){
+    public function debt()
+    {
         $obj = new Receipt();
         $receipts = $obj->debt();
-        return view('receipts.debt',[
-            'receipts'=>$receipts
+        return view('receipts.debt', [
+            'receipts' => $receipts
         ]);
     }
 
@@ -82,10 +89,10 @@ class ReceiptController extends Controller
         $paymentMethods = $obj2->index();
         $obj3 = new Accountant();
         $accountants = $obj3->index();
-        return view('receipts.create',[
-            'students'=>$student,
-            'paymentMethods'=>$paymentMethods,
-            'accountants'=>$accountants
+        return view('receipts.create', [
+            'students' => $student,
+            'paymentMethods' => $paymentMethods,
+            'accountants' => $accountants
         ]);
     }
 
@@ -108,10 +115,15 @@ class ReceiptController extends Controller
         $obj->amount_owed = $request->amount_owed;
         $obj->note = $request->note;
         $obj->store();
-        return Redirect::route('receipts.index');
 
+        $obj2 = Student::findOrFail($request->student_id);
+        $obj2->debt = $request->debt;
+        $obj2->tuition_status = $request->debt > 0 ? 0 : 1;
+        $obj2->updateDebt();
+        return Redirect::route('receipts.index');
     }
-    public function studentFilter(Request $request){
+    public function studentFilter(Request $request)
+    {
         $obj = new Student();
         $obj->class_id = $request->id;
         $students = $obj->studentFilter();
@@ -121,10 +133,10 @@ class ReceiptController extends Controller
         $obj3 = new AcademicYear();
         $obj3->id = $request->id;
         $academics = $obj3->index();
-        return view('receipts.students',[
-            'students'=>$students,
-            'classes'=>$classes,
-            'academics'=>$academics
+        return view('receipts.students', [
+            'students' => $students,
+            'classes' => $classes,
+            'academics' => $academics
         ]);
     }
     /**

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\SendSMSController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SmsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -132,4 +134,8 @@ Route::middleware('checkLoginAccountant')->prefix('/receipts')->group(function()
 
 });
     Route::get('/dashboards',[\App\Http\Controllers\DashboardController::class,'index'])->name('dashboards.index');
+
+    Route::get('/send-sms/{id}', [SendSMSController::class, 'loadPage']);
+
+    Route::post('/send-sms/{id}', [SendSMSController::class, 'sendSMS'])->name('sendSMS');
 

@@ -89,10 +89,10 @@
                                     <th>SĐT người nộp</th>
                                     <th>Đã nộp</th>
                                     <th>Công nợ</th>
-                                    <th>Payment method</th>
+                                    <th>Phương thức thanh toán</th>
                                     <th>Thời gian</th>
                                     <th>Kế Toán</th>
-                                    <th>Ghi chú</th>
+                                    <th>Nội dung</th>
                                     <th>Tạo phiếu</th>
                                 </tr>
                             </thead>

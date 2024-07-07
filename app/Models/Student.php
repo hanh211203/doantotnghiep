@@ -71,25 +71,13 @@ class Student extends Model
                 'debt'=>$this->debt
             ]);
     }
+
     public function destroyStudent(){
         DB::table('students')
             ->where('id',$this->id)
             ->delete();
     }
-    public function debtByMonth(){
-        $student = DB::table('students')
-            ->join('study_classes','students.class_id','=','study_classes.id')
-            ->join('scholarships','students.scholarship_id','=','scholarships.id')
-            ->select([
-                'students.*',
-                'study_classes.class_name AS className',
-                'scholarships.scholarship_amount AS scholarship',
-            ])
-            ->where('payment_type_id','=','12')
-            ->where('tuition_status','=','0')
-            ->get();
-        return $student;
-    }
+
     public function debtByQuarter(){
         $student = DB::table('students')
             ->join('study_classes','students.class_id','=','study_classes.id')
@@ -149,5 +137,13 @@ class Student extends Model
         return $students;
     }
 
+    public function updateDebt(){
+        DB::table('students')
+            ->where('id',$this->id)
+            ->update([
+                'tuition_status'=>$this->tuition_status,
+                'debt'=>$this->debt
+            ]);
+    }
 
 }

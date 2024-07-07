@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/admins.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/majors_fix.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
-    <title>Add student</title>
+    <title>Sinh viên - Thêm</title>
 </head>
 
 <body>
@@ -25,13 +25,13 @@
         <div class="sub-head">
             <div id="date"></div>
             <img src="{{ URL('image/avatar.png') }}" alt="" class="user-pic" onclick="toggleMenu()"
-                 style="width: 30px" height="30px">
+                style="width: 30px" height="30px">
 
             <div class="sub-menu-wrap" id="subMenu">
                 <div class="sub-menu">
                     <div class="user-info">
                         <img src="{{ URL('image/avatar.png') }}" alt="" class="user-info"
-                             style="width: 30px" height="30px">
+                            style="width: 30px" height="30px">
                         <h2>
                             @if (session()->has('admin'))
                                 Chào, {{ session('admin')->admin_name }}
@@ -42,12 +42,12 @@
 
                     <a href="#" class="sub-menu-link">
                         <img src="{{ URL('image/help.png') }}" alt="" class="user-info">
-                        <p>Help</p>
+                        <p>Trợ giúp</p>
                         <span>></span>
                     </a>
                     <a href="{{ route('admins.logout') }}" class="sub-menu-link">
                         <img src="{{ URL('image/logout.png') }}" alt="" class="user-info">
-                        <p>Log Out</p>
+                        <p>Đăng xuất</p>
                         <span>></span>
                     </a>
                 </div>
@@ -59,107 +59,107 @@
             <ul class="category">
                 <li>
                     <a href="{{ route('dashboards.index') }}">
-                        <span><i class="fas fa-tachometer-alt"></i>Dashboard</span>
+                        <span><i class="fas fa-tachometer-alt"></i>Thống Kê</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('admins.index') }}">
-                        <span><i class="fa fa-user"></i>Administrators</span>
+                        <span><i class="fa fa-user"></i>Quản Trị Viên</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('students.academics') }}">
-                        <span><i class="fas fa-user-graduate"></i>Students Management</span>
+                        <span><i class="fas fa-user-graduate"></i>Sinh Viên</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('academics.index') }}">
-                        <span><i class="fas fa-calendar"></i>Academic Years</span>
+                        <span><i class="fas fa-calendar"></i>Niên Khoá</span>
                     </a>
                 </li>
                 <li>
                     <a href=" {{ route('study_classes.index') }}">
-                        <span><i class="fas fa-home"></i>Classes Management</span>
+                        <span><i class="fas fa-home"></i>Lớp Học</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('majors.index') }}">
-                        <span><i class="fas fa-network-wired"></i>Majors Management</span>
+                        <span><i class="fas fa-network-wired"></i>Chuyên Ngành</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('accountants.index') }}">
-                        <span><i class="fas fa-file-plus"></i>Accountants Management</span>
+                        <span><i class="fas fa-file-plus"></i>Kế Toán Viên</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('payment_methods.index') }}">
-                        <span><i class="fas fa-cash-register"></i>Payment Methods</span>
+                        <span><i class="fas fa-cash-register"></i>Phương Thức Thanh Toán</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('basic_fees.index') }}">
-                        <span><i class="fas fa-money-bill"></i>Basic Fees</span>
+                        <span><i class="fas fa-money-bill"></i>Học Phí Cơ Bản</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('scholarships.index') }}">
-                        <span><i class="fas fa-gift"></i>Scholarships Level</span>
+                        <span><i class="fas fa-gift"></i>Mức Học Bổng</span>
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('payment_types.index') }}">
-                        <span><i class="fas fa-meteor"></i>Payment Types</span>
+                        <span><i class="fas fa-meteor"></i>Kiểu Đóng</span>
                     </a>
                 </li>
             </ul>
         </div>
         <div class="content2">
-            <h3 class="table-name2">Create A New Student</h3>
+            <h3 class="table-name2">Thêm Sinh Viên</h3>
             <div class="add-form">
                 <form method="post" action="{{ route('students.store') }}">
-                    <div class="form-heading">Enter Information Fields</div>
+                    <div class="form-heading">Điền Các Trường Thông Tin</div>
                     @csrf
                     <div class="inputs-list">
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 ">
                                 <div class="mt-3 mb-3">
-                                    <label for="student_name">Full name</label>
+                                    <label for="student_name">Họ tên</label>
                                     <input name="student_name" type="text" id="student_name"
                                            class="form-control form-control-sm" />
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label for="student_dob">Date of birth</label>
+                                    <label for="student_dob">Ngày sinh</label>
                                     <input name="student_dob" type="date" id="student_dob"
                                            class="form-control form-control-sm" />
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label for="student_phone">Phone number</label>
+                                    <label for="student_phone">SDT</label>
                                     <input name="student_phone" type="text" id="student_phone"
                                            class="form-control form-control-sm" />
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label>Address</label>
+                                    <label>Địa chỉ</label>
                                 </div>
                                 <div class="mt-3 mb-3 row">
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
-                                        <label for="province">Province</label>
+                                        <label for="province">Thành phố</label>
                                         <input name="province" type="text" id="province"
                                                class="form-control form-control-sm" />
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
-                                        <label for="district">District</label>
+                                        <label for="district">Quận</label>
                                         <input name="district" type="text" id="district"
                                                class="form-control form-control-sm" />
                                     </div>
                                     <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
-                                        <label for="street">Street</label>
+                                        <label for="street">Đường</label>
                                         <input name="street" type="text" id="street"
                                                class="form-control form-control-sm" />
                                     </div>
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label for="class_id">Class name</label>
+                                    <label for="class_id">Tên lớp</label>
                                     <select name="class_id" id="class_id" class="form-control form-control-sm">
                                         @foreach ($classes as $class_study)
                                             <option value="{{ $class_study->id }}">
@@ -169,7 +169,7 @@
                                     </select>
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label for="basic_fee">Basic fees</label>
+                                    <label for="basic_fee">Học phí cơ bản</label>
                                     @foreach($classes as $class_study)
                                         @foreach ($basic_fees as $basic_fee)
                                             @if($basic_fee->academic_id == $class_study->academic_id && $basic_fee->major_id == $class_study->major_id)
@@ -182,14 +182,14 @@
 
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label for="student_parent_phone">Parent phone</label>
+                                    <label for="student_parent_phone">SDT phụ huynh</label>
                                     <input name="student_parent_phone" type="text" id="student_parent_phone"
                                            class="form-control form-control-sm" />
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 ">
                                 <div class="mt-3 mb-3">
-                                    <label for="scholarship_id">Scholarship</label>
+                                    <label for="scholarship_id">Học bổng</label>
                                     <select name="scholarship_id" id="scholarship_id"
                                             class="form-control form-control-sm">
                                         @foreach ($scholarships as $scholarship)
@@ -202,7 +202,7 @@
                                 </div>
 
                                 <div class="mt-3 mb-3">
-                                    <label for="payment_type_id">Payment Type</label>
+                                    <label for="payment_type_id">Kiểu đóng</label>
                                     <select name="payment_type_id" type="text" id="payment_type_id"
                                             class="form-control form-control-sm">
                                         @foreach ($payment_types as $payment_type)
@@ -217,29 +217,29 @@
                                 </div>
 
                                 <div class="mt-3 mb-3">
-                                    <label for="total_fee">Total fee</label>
+                                    <label for="total_fee">Tổng học phí</label>
                                     <input name="total_fee" type="text" id="total_fee"
                                            class="form-control form-control-sm" />
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label for="amount_each_time">Amount each time</label>
+                                    <label for="amount_each_time">Số tiền đóng/đợt</label>
                                     <input name="amount_each_time" type="text" id="amount_each_time"
                                            class="form-control form-control-sm" />
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label for="tuition_status">Tuition status</label>
+                                    <label for="tuition_status">Trạng thái học phí</label>
                                     <input name="tuition_status" type="text" id="tuition_status"
                                            class="form-control form-control-sm" />
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label for="debt">Debt</label>
+                                    <label for="debt">Công nợ</label>
                                     <input name="debt" type="text" id="debt"
                                            class="form-control form-control-sm" />
                                 </div>
                             </div>
                         </div>
                         <div>
-                            <button class="btn-save">Save</button>
+                            <button class="btn-save">Lưu</button>
                         </div>
                     </div>
                 </form>
@@ -248,22 +248,13 @@
         <div class="clear"></div>
     </div>
 </div>
+
 <script>
     var today = new Date();
     var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
     document.getElementById("date").innerHTML = date;
 </script>
-{{-- <script>
-    $(document).ready(function() {
-        $("#discount").click(function() {
-            // let basic_fee = parseFloat($('#basic_fee').val());
-            // let scholarship = parseFloat($('#scholarship_id').val());
-            // let discount = parseFloat($('#discount').val());
-            // let total = (basic_fee-scholarship) - discount*(basic_fee-scholarship);
-            $('#total_fee').val("0");
-        })
-    });
-</script> --}}
+
 
 <script>
     let subMenu = document.getElementById("subMenu");

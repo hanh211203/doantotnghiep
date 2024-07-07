@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/font/themify-icons/themify-icons.css') }}">
@@ -16,7 +17,10 @@
     <link rel="stylesheet" href="{{ asset('assets/css/majors_fix.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/class.css') }}">
+
     <title>Danh sách sinh viên</title>
+
+    <script src="{{ URL::to('js/table2excel.js') }}"></script>
 </head>
 
 <body>
@@ -70,42 +74,36 @@
                             <span><i class="fas fa-user-graduate"></i>Sinh Viên</span>
                         </a>
                     </li>
-                    <li>
-                        <a>
-                            <span><i class="fas fa-receipt"></i> Công Nợ</span>
-                            <ul class="sub-nav">
-                                <li><a href="{{ route('receipts.debtByQuarters') }}">Công Nợ Quý</a></li>
-                                <li><a href="{{ route('receipts.debtBySemesters') }}">Công Nợ Kì</a></li>
-                                <li><a href="{{ route('receipts.debtByYears') }}">Công Nợ Năm</a></li>
-                            </ul>
-                        </a>
-                    </li>
+
                 </ul>
             </div>
             <div class="content">
                 <h3 class="table-name2">Danh Sách Sinh Viên </h3>
                 <div class="main-content">
+                    <button id="downloadexcel-button" class="btn btn-success">Xuất file Excel</button>
+                    {{-- css in majors_fix.css --}}
+                    <br><br>
                     @foreach ($classes as $class)
                         <h4>Lớp {{ $class->class_name }}</h4>
                     @endforeach
                     <div class="clear"></div>
                     <div class="table2">
-                        <table border="1px" cellspacing="0" cellpadding="0" width="100%" id="myDataTable">
+                        <table id="myDataTable" border="1px" cellspacing="0" cellpadding="0" width="100%">
                             <thead>
                                 <tr>
                                     <th class="left">ID</th>
                                     <th>Họ tên</th>
                                     <th>Ngày sinh</th>
                                     <th>SDT</th>
-                                    <th>Địa chỉ</th>
                                     <th>Học bổng</th>
                                     <th>Tổng học phí</th>
-                                    <th>Số tiền đóng/lần</th>
+                                    <th>HP/lần đóng</th>
                                     <th>Kiểu đóng</th>
                                     <th>SDT phụ huynh </th>
                                     <th>Công nợ</th>
-                                    <th>Trạng thái học phí</th>
+                                    <th style="width: 64.1094px;">Trạng thái học phí</th>
                                     <th class="right">Tạo phiếu thu</th>
+                                    <th>Gửi thông báo</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -115,20 +113,30 @@
                                         <td>{{ $student->student_name }}</td>
                                         <td>{{ $student->student_dob }}</td>
                                         <td>{{ $student->student_phone }}</td>
-                                        <td>{{ $student->province }} province, {{ $student->district }} district,
-                                            {{ $student->street }} street</td>
-                                        <td>{{ number_format($student->scholarship, 0, '', ',') }}
-                                        </td>
+                                        <td>{{ number_format($student->scholarship, 0, '', ',') }}</td>
                                         <td>{{ number_format($student->total_fee, 0, '', ',') }}</td>
                                         <td>{{ number_format($student->amount_each_time, 0, '', ',') }}</td>
                                         <td>{{ $student->paymentTypeName }}</td>
                                         <td>{{ $student->student_parent_phone }}</td>
-                                        <td>{{ $student->debt}}</td>
-                                        <td>{{ $student->tuition_status}}</td>
+                                        <td>{{ number_format($student->debt, 0, '', ',') }}</td>
+                                        <td className="status">
+                                            @if ($student->tuition_status == 1)
+                                                <span class="completed">Đã đóng</span>
+                                            @else
+                                                <span class="no-completed">Chưa đóng</span>
+                                            @endif
+                                        </td>
                                         <td class="btn-edit">
                                             <div class="edit-block">
                                                 <a href="{{ route('receipts.create', $student->id) }}">
                                                     <i class="fas fa-pen"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                        <td class="btn-edit">
+                                            <div class="edit-block">
+                                                <a href="{{ route('sendSMS', $student->id) }}">
+                                                    <i class="fas fa-envelope"></i>
                                                 </a>
                                             </div>
                                         </td>
@@ -148,6 +156,7 @@
     </script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
     <script>
@@ -166,11 +175,6 @@
 
                     {
                         "data": "student_phone"
-                    },
-                    {
-                        "data": [
-                            "province", "district", "street"
-                        ]
                     },
                     {
                         "data": "scholarship"
@@ -194,12 +198,17 @@
                         "data": "tuition_status"
                     },
                     {
-                        "defaultContent": "<button>Delete</button>" // Cột giả với nội dung mặc định
+                        "defaultContent": "<button>Delete</button>"
+                    },
+                    {
+                        "defaultContent": "<button>SMS</button>" // Cột giả với nội dung mặc định
                     }
-                ]
+                ],
             });
         });
     </script>
+
+
 
     <script>
         let subMenu = document.getElementById("subMenu");
@@ -218,6 +227,15 @@
 
         subMenu.addEventListener('click', (event) => event.stopPropagation());
     </script>
+
+    <script>
+        document.getElementById('downloadexcel-button').addEventListener('click', function() {
+            var table2excel = new Table2Excel();
+            table2excel.export(document.querySelectorAll("#myDataTable"));
+        });
+    </script>
+
+
 </body>
 
 </html>

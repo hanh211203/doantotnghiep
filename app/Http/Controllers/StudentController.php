@@ -105,8 +105,10 @@ class StudentController extends Controller
     {
         $obj1 = new StudyClass();
         $classes = $obj1->index();
+
         $obj2 = new Scholarship();
         $scholarships = $obj2->index();
+
         $obj3 = new PaymentType();
         $payment_types = $obj3->index();
         $obj4 = new BasicFee();
@@ -114,6 +116,7 @@ class StudentController extends Controller
 
         $obj4 = new Student();
         $obj4->id = $request->id;
+
         $students = $obj4->edit();
         return view('students.edit',[
             'classes'=>$classes,

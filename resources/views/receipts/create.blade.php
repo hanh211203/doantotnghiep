@@ -5,12 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <link rel="stylesheet" href="{{ asset('assets/css/admins.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/majors_fix.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/create_receipt.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/modal.css') }}">
+
     <title>Receipts list</title>
 </head>
 
@@ -65,7 +67,7 @@
                             <span><i class="fas fa-user-graduate"></i>Sinh Viên</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a>
                             <span><i class="fas fa-receipt"></i> Công Nợ</span>
                             <ul class="sub-nav">
@@ -74,7 +76,7 @@
                                 <li><a href="{{ route('receipts.debtByYears') }}">Công Nợ Năm</a></li>
                             </ul>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
             <div class="content">
@@ -88,22 +90,22 @@
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_id">Mã SV</label>
                                         <input value="{{ $student->id }}" name="student_id" type="text"
-                                            id="student_id" />
+                                            id="student_id" readonly/>
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_name">Tên SV</label>
                                         <input value="{{ $student->student_name }}" name="student_name" type="text"
-                                            id="student_name" />
+                                            id="student_name" readonly/>
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_dob">Ngày sinh</label>
                                         <input value="{{ $student->student_dob }}" name="student_dob" type="date"
-                                            id="student_dob" />
+                                            id="student_dob" readonly/>
                                     </div>
                                     <div class="mt-3 mb-3">
-                                        <label class="item-label" for="amount_each_time">Số tiền/lần đóng</label>
+                                        <label class="item-label" for="amount_each_time">HP/lần đóng</label>
                                         <input value="{{ $student->amount_each_time }}" name="amount_each_time"
-                                            type="text" id="amount_each_time" />
+                                            type="text" id="amount_each_time" readonly/>
                                     </div>
                                 @endforeach
                             </div>
@@ -138,15 +140,23 @@
                                     <label class="item-label" for="submitter_phone">SĐT người nộp</label>
                                     <input name="submitter_phone" type="text" id="submitter_phone" />
                                 </div>
-                            </div>
-                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="payment_date_time">Vào lúc</label>
                                     <input name="payment_date_time" type="datetime-local" id="payment_date_time" />
                                 </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                @foreach ($students as $student)
+                                    <div class="mt-3 mb-3">
+                                        <label class="item-label" for="current_debt">Công nợ hiện tại</label>
+                                        <input name="current_debt" value="{{ $student->debt }}"
+                                            data-current="{{ $student->debt }}" type="text" id="current_debt" readonly/>
+                                    </div>
+                                @endforeach
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="amount_of_money">Số tiền đóng</label>
-                                    <input value="{{ $student->amount_each_time }}" name="amount_of_money"
+                                    <input value="{{ $student->amount_each_time }}"
+                                        data-amount="{{ $student->amount_each_time }}" name="amount_of_money"
                                         type="text" id="amount_of_money" />
                                 </div>
                                 <div class="mt-3 mb-3">
@@ -154,25 +164,75 @@
                                     <input name="amount_owed" type="text" id="amount_owed" />
                                 </div>
                                 <div class="mt-3 mb-3">
-                                    <label class="item-label" for="note">Ghi chú</label>
-                                    <input name="note" type="text" id="note" />
+                                    <label class="item-label" for="debt">Cập nhật công nợ</label>
+                                    <input name="debt" type="text" id="debt" />
+                                </div>
+                                <div class="mt-3 mb-3">
+                                    <label class="item-label" for="note">Nội dung</label>
+                                    <input name="note" type="text" id="note" value="{{ old('ghi_chu', 'Không') }}"/>
                                 </div>
                             </div>
                         </div>
-                        <div>
-                            <button class="btn-save">Save</button>
+                        <div class="row">
+                            <div id="total_amount"
+                                style="margin-right: 199px;
+                            font-weight: 700;
+                            font-size: 18px;
+                            color: green;
+                            margin-bottom: 40px;
+                            margin-top: -10px;
+                            padding-right: 55px;
+                            text-align: right;">
+                                <h5>Tổng số tiền đóng: </h5>
+                            </div>
+                        </div>
+
+                        <div class="create-receipt-btn-save">
+                            <button class="btn-save">Tạo</button>
                         </div>
                     </form>
+                    <button class="open-modal">Scan Mã QR Code Chuyển khoản</button>
                 </div>
-
             </div>
         </div>
     </div>
+
+    {{-- Mã QR Code --}}
+    <div class="modal2">
+        <div class="modal2-container">
+            <div class="modal-name">Scan Mã QR Code</div>
+            <br>
+            <br>
+            <img src="{{ URL('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png') }}" class="qr_code_img" alt="qr"
+                style="width: 250px; height: 250px">
+        </div>
+    </div>
+
+    <script>
+        const openModal = document.querySelector('.open-modal')
+        const modal = document.querySelector('.modal2');
+        const modalContainer = document.querySelector('.modal2-container');
+
+        function showModalQR() {
+            modal.classList.add('open');
+        }
+
+        function hideModalQR() {
+            modal.classList.remove('open');
+        }
+        openModal.addEventListener('click', showModalQR);
+        modal.addEventListener('click', hideModalQR);
+        modalContainer.addEventListener('click', function(event) {
+            event.stopPropagation();
+        })
+    </script>
+
     <script>
         var today = new Date();
         var date = today.getDate() + '/' + (today.getMonth() + 1) + '/' + today.getFullYear();
         document.getElementById("date").innerHTML = date;
     </script>
+
 
     <script>
         let subMenu = document.getElementById("subMenu");
@@ -192,5 +252,64 @@
         subMenu.addEventListener('click', (event) => event.stopPropagation());
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var currentDebt = document.getElementById('current_debt');
+            var amountOfMoney = document.getElementById('amount_of_money');
+            var amountOwed = document.getElementById('amount_owed');
+            var debt = document.getElementById('debt');
+            var current = parseFloat(currentDebt.getAttribute('data-current')) || 0;
+
+            function calculateOwed() {
+                var amountMoney = parseFloat(amountOfMoney.value) || 0;
+                //calculate
+                var owed = current - amountMoney;
+                var updateDebt = current - amountMoney;
+                //in ra màn hình
+                amountOwed.value = owed.toFixed(2);
+                debt.value = updateDebt.toFixed(2);
+            }
+            // Add event listeners
+            amountOfMoney.addEventListener('input', calculateOwed);
+
+            calculateOwed();
+        });
+    </script>
+
+    {{-- ma QR code --}}
+    <script>
+        const amountInput = document.getElementById('amount_of_money');
+        const totalAmount = document.getElementById('total_amount');
+        const qr_code_img = document.querySelector(".qr_code_img");
+        let qrCodeAmount = 0;
+
+        // Function to update total amount and QR code
+        function updateTotalAmount() {
+            const enteredAmount = parseFloat(amountInput.value.trim());
+            if (!isNaN(enteredAmount)) {
+                qrCodeAmount = enteredAmount; // Gán giá trị của enteredAmount cho qrCodeAmount
+                totalAmount.textContent = 'Tổng số tiền: ' + qrCodeAmount.toLocaleString() + ' VND';
+            } else {
+                qrCodeAmount = 0; // Nếu không phải số, gán 0 cho qrCodeAmount
+                totalAmount.textContent = 'Tổng số tiền:';
+            }
+
+            // Cập nhật mã QR code
+            let MY_BANK = {
+                BANK_ID: "Vietcombank",
+                ACCOUNT_NO: "0451000327899",
+            };
+            let desriptionTransaction = "{{ $student->student_name }} Chuyen Khoan Hoc Phi";
+            let QR =
+                `https://img.vietqr.io/image/${MY_BANK.BANK_ID}-${MY_BANK.ACCOUNT_NO}-qr_only.png?amount=${qrCodeAmount}&addInfo=${desriptionTransaction}`;
+            qr_code_img.src = QR;
+        }
+
+        // Run updateTotalAmount() once when the page is loaded
+        window.addEventListener('DOMContentLoaded', updateTotalAmount);
+
+        // Listen for changes in the amount input
+        amountInput.addEventListener('input', updateTotalAmount);
+    </script>
 
 </body>

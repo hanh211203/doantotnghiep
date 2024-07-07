@@ -69,7 +69,7 @@
                             <span><i class="fas fa-user-graduate"></i>Sinh Viên</span>
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a>
                             <span><i class="fas fa-receipt"></i> Công Nợ</span>
                             <ul class="sub-nav">
@@ -78,7 +78,7 @@
                                 <li><a href="{{ route('receipts.debtByYears') }}">Công Nợ Năm</a></li>
                             </ul>
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </div>
             <div class="content">
@@ -91,14 +91,15 @@
                                 <tr>
                                     <th class="left">ID</th>
                                     <th>Họ tên SV</th>
+                                    <th>Lớp</th>
                                     <th>Người nộp</th>
                                     <th>SĐT người nộp</th>
                                     <th>Đã nộp</th>
                                     <th>Công nợ</th>
-                                    <th>Payment method</th>
+                                    <th>Phương thức thanh toán</th>
                                     <th>Thời gian</th>
                                     <th>Kế Toán</th>
-                                    <th>Ghi chú</th>
+                                    <th>Nội dung</th>
                                     <th>Xuất phiếu</th>
                                 </tr>
                             </thead>
@@ -107,6 +108,13 @@
                                     <tr>
                                         <td>{{ $receipt->id }}</td>
                                         <td>{{ $receipt->studentName }}</td>
+                                        @foreach($classes as $classes2)
+                                            @if($classes2->id == $receipt->classId)
+                                                <td>
+                                                    {{$classes2->class_name }}
+                                                </td>
+                                            @endif
+                                        @endforeach
                                         <td>{{ $receipt->submitter_name }}</td>
                                         <td>{{ $receipt->submitter_phone }}</td>
                                         <td>{{ number_format($receipt->amount_of_money, 0, '', ',') }}</td>
@@ -147,6 +155,9 @@
                     }, // Cột 1
                     {
                         "data": "studentName"
+                    },
+                    {
+                        "data": "className"
                     }, // Cột 2
                     {
                         "data": "submitter_name"

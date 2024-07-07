@@ -135,7 +135,7 @@ class AdminController extends Controller
             $admin = Auth::guard('admins')->user();
             Auth::guard('admins')->login($admin);
             session(['admin' => $admin]);
-            return Redirect::route('academics.index');
+            return Redirect::route('dashboards.index');
         } else {
             //            dd("error");
             return Redirect::back();

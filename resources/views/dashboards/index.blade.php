@@ -27,7 +27,7 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.svg" type="image/x-icon') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Dashboard</title>
+    <title>Thống Kê</title>
 </head>
 
 <body>
@@ -188,8 +188,9 @@
 
                             </div>
 
-                            <div class="box" style="width: 200px">
-                                <div class="chart-overview">
+
+                            <div class="box" style="display: flex; width: 1000px;">
+                                <div class="chart-overview" style="flex: 1;">
                                     <div class="chart-content bg-white">
                                         <div class="bar-chart">
                                             <h1>Biểu Đồ Tổng</h1>
@@ -231,6 +232,25 @@
 
                                     </div>
                                 </div>
+
+                                {{-- Tin tức --}}
+                                <div class="news-column" style="flex: 1; margin-left: 42px;">
+                                    <div class="line-news"
+                                        style="height: 3px; width: 400px; background-color: #147dbc;"></div>
+                                    <h1 style="font-size: 26px; margin-top: 15px;margin-bottom: 13px">Tin Tức</h1>
+                                    {{-- Content --}}
+                                    <div class="card mb-3" style="width: 400px">
+                                        <img src="{{ URL('image/anh-t38-39.png') }}" alt=""
+                                            class="card-img-top" style="height: 146px;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Thông báo Kế hoạch đóng Học phí Quý 5/2024</h5>
+                                            <p class="card-text">Dựa theo đề án 07-NQ34, Bộ phân Kế toán đưa ra kế
+                                                hoạch tổ chức đóng học như sau</p>
+                                            <p class="card-text"><small class="text-body-secondary">03/07/2024
+                                                    19:45PM</small></p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <br>
@@ -241,6 +261,9 @@
 
                     </section>
                 </div>
+
+
+
             </div>
         </div>
     </div>
@@ -255,6 +278,7 @@
     <script src="//cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 
 
+    {{-- User avatar --}}
     <script>
         let subMenu = document.getElementById("subMenu");
 
@@ -273,6 +297,7 @@
         subMenu.addEventListener('click', (event) => event.stopPropagation());
     </script>
 
+    {{-- Chatbot AI --}}
     <script src="https://www.gstatic.com/dialogflow-console/fast/messenger/bootstrap.js?v=1"></script>
     <df-messenger chat-title="BKM_ChatBot" agent-id="5fbd1ad1-fe4a-461c-a33f-1a77fc18fded"
         language-code="vi"></df-messenger>

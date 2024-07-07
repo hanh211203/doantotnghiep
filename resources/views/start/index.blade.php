@@ -13,7 +13,7 @@
     <title>Welcom to BKACAD's tuition manager!</title>
     <style>
         body{
-            background-image: url('https://static.vecteezy.com/system/resources/previews/005/642/747/non_2x/abstract-wavy-shape-on-blue-and-white-layer-background-modern-curve-pattern-ocean-color-simple-flat-design-you-can-use-for-cover-brochure-template-poster-banner-web-print-illustration-vector.jpg');
+            background-image: url('image/bg-image.jpg');
             background-size: cover;
             background-repeat: 0;
         }
@@ -138,6 +138,7 @@
             </form>
         </div>
     </div>
+
     <script>
         const modalAdminLogin = document.querySelector('.js-modal-login-adm');
         const modal = document.querySelector('.js-modal');
