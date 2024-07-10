@@ -119,7 +119,7 @@ class ReceiptController extends Controller
 
             $obj2 = Student::findOrFail($request->student_id);
             $obj2->debt = $request->debt;
-            $obj2->tuition_status = $request->debt > 0 ? 0 : 1;
+            $obj2->times_paid = $request->times_paid;
             $obj2->updateDebt();
             return Redirect::route('receipts.index');
         } else {

@@ -100,8 +100,8 @@
                                     <th>HP/lần đóng</th>
                                     <th>Kiểu đóng</th>
                                     <th>SDT phụ huynh </th>
+                                    <th>Số đợt đã đóng</th>
                                     <th>Công nợ</th>
-                                    <th style="width: 64.1094px;">Trạng thái học phí</th>
                                     <th class="right">Tạo phiếu thu</th>
                                     <th>Gửi thông báo</th>
                                 </tr>
@@ -118,14 +118,8 @@
                                         <td>{{ number_format($student->amount_each_time, 0, '', ',') }}</td>
                                         <td>{{ $student->paymentTypeName }}</td>
                                         <td>{{ $student->student_parent_phone }}</td>
+                                        <td style="color: red; font-weight: bold">{{ $student->times_paid }}</td>
                                         <td>{{ number_format($student->debt, 0, '', ',') }}</td>
-                                        <td className="status">
-                                            @if ($student->tuition_status == 1)
-                                                <span class="completed">Đã đóng</span>
-                                            @else
-                                                <span class="no-completed">Chưa đóng</span>
-                                            @endif
-                                        </td>
                                         <td class="btn-edit">
                                             <div class="edit-block">
                                                 <a href="{{ route('receipts.create', $student->id) }}">
@@ -192,10 +186,10 @@
                         "data": "student_parent_phone"
                     },
                     {
-                        "data": "debt"
+                        "data": "times_paid"
                     },
                     {
-                        "data": "tuition_status"
+                        "data": "debt"
                     },
                     {
                         "defaultContent": "<button>Delete</button>"
@@ -234,6 +228,8 @@
             table2excel.export(document.querySelectorAll("#myDataTable"));
         });
     </script>
+
+
 
 
 </body>

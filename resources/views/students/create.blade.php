@@ -165,7 +165,7 @@
                                             @endif
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
-                                            <label for="district">Quận</label>
+                                            <label for="district">Quận/Huyện</label>
                                             <input name="district" type="text" id="district"
                                                 class="form-control form-control-sm" />
                                             @if ($errors->has('district'))
@@ -173,7 +173,7 @@
                                             @endif
                                         </div>
                                         <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 col-4">
-                                            <label for="street">Đường</label>
+                                            <label for="street">Phố/Xã</label>
                                             <input name="street" type="text" id="street"
                                                 class="form-control form-control-sm" />
                                             @if ($errors->has('street'))
@@ -205,16 +205,16 @@
                                         @endforeach
 
                                     </div>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 ">
                                     <div class="mt-3 mb-3">
                                         <label for="student_parent_phone">SDT phụ huynh</label>
                                         <input name="student_parent_phone" type="text" id="student_parent_phone"
-                                            class="form-control form-control-sm" />
+                                               class="form-control form-control-sm" />
                                         @if ($errors->has('student_parent_phone'))
                                             <span class="text-danger">{{ $errors->first('student_parent_phone') }}</span>
                                         @endif
                                     </div>
-                                </div>
-                                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 col-6 ">
                                     <div class="mt-3 mb-3">
                                         <label for="scholarship_id">Học bổng</label>
                                         <select name="scholarship_id" id="scholarship_id"
@@ -252,14 +252,6 @@
                                         <label for="amount_each_time">Số tiền đóng/đợt</label>
                                         <input name="amount_each_time" type="text" id="amount_each_time"
                                             class="form-control form-control-sm" readonly />
-                                    </div>
-                                    <div class="mt-3 mb-3">
-                                        <label for="tuition_status">Trạng thái học phí</label>
-                                        <input name="tuition_status" type="text" id="tuition_status"
-                                            class="form-control form-control-sm" />
-                                        @if ($errors->has('tuition_status'))
-                                            <span class="text-danger">{{ $errors->first('tuition_status') }}</span>
-                                        @endif
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label for="debt">Công nợ</label>
@@ -333,7 +325,7 @@
                 // Update giao dien input field
                 totalFeeInput.value = totalFee.toFixed(2);
                 paymentTimesDropdown.value = amountEachTime.toFixed(2);
-                debt.value = amountEachTime.toFixed(2);
+                debt.value = totalFee.toFixed(2);
             }
 
 

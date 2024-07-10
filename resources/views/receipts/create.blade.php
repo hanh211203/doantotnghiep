@@ -67,16 +67,6 @@
                             <span><i class="fas fa-user-graduate"></i>Sinh Viên</span>
                         </a>
                     </li>
-                    {{-- <li>
-                        <a>
-                            <span><i class="fas fa-receipt"></i> Công Nợ</span>
-                            <ul class="sub-nav">
-                                <li><a href="{{ route('receipts.debtByQuarters') }}">Công Nợ Quý</a></li>
-                                <li><a href="{{ route('receipts.debtBySemesters') }}">Công Nợ Kì</a></li>
-                                <li><a href="{{ route('receipts.debtByYears') }}">Công Nợ Năm</a></li>
-                            </ul>
-                        </a>
-                    </li> --}}
                 </ul>
             </div>
             <div class="content">
@@ -102,6 +92,12 @@
                                         <input value="{{ $student->student_dob }}" name="student_dob" type="date"
                                             id="student_dob" readonly />
                                     </div>
+                                    <div class="mt-3 mb-3">
+                                        <label class="item-label" for="student_total_fee">Tổng học phí</label>
+                                        <input value="{{ $student->total_fee }}" name="student_total_fee" type="text"
+                                            id="student_total_fee" readonly />
+                                    </div>
+
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="amount_each_time">HP/lần đóng</label>
                                         <input value="{{ $student->amount_each_time }}" name="amount_each_time"
@@ -180,10 +176,16 @@
                                     <label class="item-label" for="debt">Cập nhật công nợ</label>
                                     <input name="debt" type="text" id="debt" readonly />
                                 </div>
+
+                                <div class="mt-3 mb-3">
+                                    <label class="item-label" for="times_paid">Đợt đóng</label>
+                                    <input name="times_paid" type="text" id="times_paid" readonly />
+                                </div>
+
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="note">Nội dung</label>
                                     <input name="note" type="text" id="note"
-                                        value="{{ old('ghi_chu', 'Không') }}" />
+                                        value="{{ old('ghi_chu', 'Đóng học phí ') }}" />
                                     @if ($errors->has('note'))
                                         <span class="text-danger">{{ $errors->first('note') }}</span>
                                     @endif
@@ -276,6 +278,9 @@
             var amountOwed = document.getElementById('amount_owed');
             var debt = document.getElementById('debt');
             var current = parseFloat(currentDebt.getAttribute('data-current')) || 0;
+            var studentTotalFee = document.getElementById('student_total_fee');
+            var amountEachTime = document.getElementById('amount_each_time');
+            var timesPaid = document.getElementById('times_paid');
 
             function calculateOwed() {
                 var amountMoney = parseFloat(amountOfMoney.value) || 0;
@@ -286,10 +291,18 @@
                 amountOwed.value = owed.toFixed(2);
                 debt.value = updateDebt.toFixed(2);
             }
+
+            // Calculate timesPaid
+            var totalFee = parseFloat(studentTotalFee.value) || 0;
+            var eachTime = parseFloat(amountEachTime.value) || 0;
+            var timesPaidValue = ((totalFee - current) / eachTime) + 1;
+            timesPaid.value = Math.round(timesPaidValue);
+
             // Add event listeners
             amountOfMoney.addEventListener('input', calculateOwed);
-
             calculateOwed();
+
+
         });
     </script>
 

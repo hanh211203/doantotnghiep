@@ -18,7 +18,7 @@ class StudentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
      */
     public function index()
     {
@@ -33,7 +33,7 @@ class StudentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create( Request $request)
     {
@@ -58,7 +58,7 @@ class StudentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\StoreStudentRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function store(StoreStudentRequest $request)
     {
@@ -76,7 +76,6 @@ class StudentController extends Controller
             $obj->payment_type_id = $request->payment_type_id;
             $obj->total_fee = $request->total_fee;
             $obj->amount_each_time = $request->amount_each_time;
-            $obj->tuition_status = $request->tuition_status;
             $obj->debt = $request->debt;
             $obj->store();
             return Redirect::route('students.studentFilter',[
@@ -104,7 +103,7 @@ class StudentController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Student $student, Request $request)
     {
@@ -138,7 +137,7 @@ class StudentController extends Controller
      *
      * @param  \App\Http\Requests\UpdateStudentRequest  $request
      * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function update(UpdateStudentRequest $request, Student $student)
     {
@@ -156,7 +155,6 @@ class StudentController extends Controller
         $obj->class_id = $request->class_id;
         $obj->scholarship_id = $request->scholarship_id;
         $obj->payment_type_id = $request->payment_type_id;
-        $obj->tuition_status = $request->tuition_status;
         $obj->debt = $request->debt;
         $obj->updateStudent();
         return Redirect::route('students.studentFilter',[
@@ -169,7 +167,7 @@ class StudentController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Student  $student
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function destroy(Student $student, Request $request)
     {

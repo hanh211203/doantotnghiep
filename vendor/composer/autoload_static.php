@@ -637,6 +637,7 @@ class ComposerStaticInit0b80d2b2c772a79c4b8ec67c6516e3c3
         'App\\Http\\Requests\\StorePaymentTypeRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StorePaymentTypeRequest.php',
         'App\\Http\\Requests\\StoreReceiptRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreReceiptRequest.php',
         'App\\Http\\Requests\\StoreScholarshipRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreScholarshipRequest.php',
+        'App\\Http\\Requests\\StoreSendSMSRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreSendSMSRequest.php',
         'App\\Http\\Requests\\StoreStartRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreStartRequest.php',
         'App\\Http\\Requests\\StoreStudentRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreStudentRequest.php',
         'App\\Http\\Requests\\StoreStudyClassRequest' => __DIR__ . '/../..' . '/app/Http/Requests/StoreStudyClassRequest.php',

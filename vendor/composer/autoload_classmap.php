@@ -47,6 +47,7 @@ return array(
     'App\\Http\\Requests\\StorePaymentTypeRequest' => $baseDir . '/app/Http/Requests/StorePaymentTypeRequest.php',
     'App\\Http\\Requests\\StoreReceiptRequest' => $baseDir . '/app/Http/Requests/StoreReceiptRequest.php',
     'App\\Http\\Requests\\StoreScholarshipRequest' => $baseDir . '/app/Http/Requests/StoreScholarshipRequest.php',
+    'App\\Http\\Requests\\StoreSendSMSRequest' => $baseDir . '/app/Http/Requests/StoreSendSMSRequest.php',
     'App\\Http\\Requests\\StoreStartRequest' => $baseDir . '/app/Http/Requests/StoreStartRequest.php',
     'App\\Http\\Requests\\StoreStudentRequest' => $baseDir . '/app/Http/Requests/StoreStudentRequest.php',
     'App\\Http\\Requests\\StoreStudyClassRequest' => $baseDir . '/app/Http/Requests/StoreStudyClassRequest.php',
