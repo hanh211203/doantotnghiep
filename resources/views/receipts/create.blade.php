@@ -90,7 +90,7 @@
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_dob">Ngày sinh</label>
                                         <input value="{{ $student->student_dob }}" name="student_dob" type="date"
-                                            id="student_dob" readonly />
+                                            id="student_dob" readonly style="width:184px"/>
                                     </div>
                                     <div class="mt-3 mb-3">
                                         <label class="item-label" for="student_total_fee">Tổng học phí</label>
@@ -103,12 +103,25 @@
                                         <input value="{{ $student->amount_each_time }}" name="amount_each_time"
                                             type="text" id="amount_each_time" readonly />
                                     </div>
+                                    <div class="mt-3 mb-3">
+                                        <label class="item-label" for="payment_type">Kiểu đóng</label>
+                                        <select name="payment_type" type="text" id="payment_type" style="width:184px">
+                                            @foreach ($paymentTypes as $paymentType)
+                                                @if($student->payment_type_id == $paymentType->id)
+                                                    <option value="{{ $paymentType->id }}">
+                                                        {{ $paymentType->payment_type_name }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                    </div>
+
                                 @endforeach
                             </div>
                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="payment_method_id">Phương thức đóng</label>
-                                    <select name="payment_method_id" type="text" id="payment_method_id">
+                                    <select name="payment_method_id" type="text" id="payment_method_id" style="width:184px">
                                         @foreach ($paymentMethods as $paymentMethod)
                                             <option value="{{ $paymentMethod->id }}">
                                                 {{ $paymentMethod->name }}
@@ -119,7 +132,7 @@
 
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="accountant_id">Kế toán</label>
-                                    <select name="accountant_id" type="text" id="accountant_id">
+                                    <select name="accountant_id" type="text" id="accountant_id" style="width:184px">
                                         @if (session()->has('accountant'))
                                             <option value="{{ session('accountant')->id }}">
                                                 {{ session('accountant')->accountant_name }}
@@ -181,11 +194,10 @@
                                     <label class="item-label" for="times_paid">Đợt đóng</label>
                                     <input name="times_paid" type="text" id="times_paid" readonly />
                                 </div>
-
                                 <div class="mt-3 mb-3">
                                     <label class="item-label" for="note">Nội dung</label>
                                     <input name="note" type="text" id="note"
-                                        value="{{ old('ghi_chu', 'Đóng học phí ') }}" />
+                                        value="{{ old('ghi_chu', 'Đóng học phí đợt ') }}" />
                                     @if ($errors->has('note'))
                                         <span class="text-danger">{{ $errors->first('note') }}</span>
                                     @endif
@@ -281,6 +293,7 @@
             var studentTotalFee = document.getElementById('student_total_fee');
             var amountEachTime = document.getElementById('amount_each_time');
             var timesPaid = document.getElementById('times_paid');
+            var paymentType = document.getElementById('payment_type');
 
             function calculateOwed() {
                 var amountMoney = parseFloat(amountOfMoney.value) || 0;
@@ -297,6 +310,9 @@
             var eachTime = parseFloat(amountEachTime.value) || 0;
             var timesPaidValue = ((totalFee - current) / eachTime) + 1;
             timesPaid.value = Math.round(timesPaidValue);
+
+            document.getElementById('note').value = 'Đóng học phí '+ paymentType.options[paymentType.selectedIndex].text+" "+ Math.round(timesPaidValue);
+
 
             // Add event listeners
             amountOfMoney.addEventListener('input', calculateOwed);
@@ -329,7 +345,7 @@
                 BANK_ID: "Vietcombank",
                 ACCOUNT_NO: "0451000327899",
             };
-            let desriptionTransaction = "{{ $student->student_name }} Chuyen Khoan Hoc Phi";
+            let desriptionTransaction = "{{ $student->student_name }}" +" "+ document.getElementById('note').value;
             let QR =
                 `https://img.vietqr.io/image/${MY_BANK.BANK_ID}-${MY_BANK.ACCOUNT_NO}-qr_only.png?amount=${qrCodeAmount}&addInfo=${desriptionTransaction}`;
             qr_code_img.src = QR;

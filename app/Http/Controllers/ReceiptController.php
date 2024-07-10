@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AcademicYear;
 use App\Models\Accountant;
 use App\Models\PaymentMethod;
+use App\Models\PaymentType;
 use App\Models\Receipt;
 use App\Http\Requests\StoreReceiptRequest;
 use App\Http\Requests\UpdateReceiptRequest;
@@ -89,10 +90,13 @@ class ReceiptController extends Controller
         $paymentMethods = $obj2->index();
         $obj3 = new Accountant();
         $accountants = $obj3->index();
+        $obj4 = new PaymentType();
+        $paymentTypes = $obj4->index();
         return view('receipts.create', [
             'students' => $student,
             'paymentMethods' => $paymentMethods,
-            'accountants' => $accountants
+            'accountants' => $accountants,
+            'paymentTypes'=>$paymentTypes
         ]);
     }
 
